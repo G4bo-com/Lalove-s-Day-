@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 23rd Birthday, Bebeng! 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Pastel Green Palette */
+  --primary: #8fce92;     
+  --secondary: #b5e3b7;   
+  --bg-card: #e8f5e9;     
+  --dark: #2b2b2b;        
+}
+
+body {
+  margin: 0;
+  font-family: 'Pixelify Sans', sans-serif;
+  background: url('image_b960c3.jpg') center/cover no-repeat fixed;
+  overflow: hidden; 
+}
+
+.page {
+  display: none;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 40px 20px 100px 20px; 
+  text-align: center;
+  background: rgba(232, 245, 233, 0.85); 
+  background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.page.active {
+  display: block;
+  animation: flip 0.6s steps(5, end); 
+}
+
+@keyframes flip {
+  from { transform: rotateY(90deg); opacity: 0; }
+  to { transform: rotateY(0); opacity: 1; }
+}
+
+h1 {
+  color: var(--dark);
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  text-shadow: 3px 3px 0px var(--primary);
+  letter-spacing: 2px;
+}
+
+h2 {
+  color: #3b5c3e;
+  font-weight: 700;
+}
+
+p {
+  color: var(--dark);
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.card {
+  max-width: 500px;
+  margin: auto;
+  background: var(--bg-card);
+  padding: 30px;
+  position: relative;
+  z-index: 2;
+  border: 4px solid var(--dark);
+  box-shadow: 8px 8px 0px var(--dark);
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: var(--primary);
+  color: var(--dark);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 3px solid var(--dark);
+  box-shadow: 4px 4px 0px var(--dark);
+  transition: all 0.1s;
+}
+
+button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--dark);
+  background: var(--secondary);
+} 
+
+.nav {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.nav button {
+  background: var(--secondary);
+  padding: 10px 15px;
+} 
+
+.hidden {
+  display: none !important;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+  image-rendering: pixelated;
+}
+
+/* === Polished SVG Cake Wrapper === */
+.svg-cake-wrapper {
+  position: relative;
+  width: 280px; 
+  max-width: 100%;
+  aspect-ratio: 200 / 180;
+  margin: 10px auto 30px auto;
+  filter: drop-shadow(0px 15px 0px rgba(0,0,0,0.08)); 
+}
+
+#candles-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.candle {
+  position: absolute;
+  width: 8px; height: 35px;
+  border: 2px solid var(--dark);
+  border-bottom: none;
+  transform: translate(-50%, -100%);
+  transition: all 0.3s;
+}
+
+.candle::after {
+  content: '';
+  position: absolute;
+  width: 10px; height: 14px;
+  background: #ffae00;
+  top: -18px; left: -3px; 
+  border: 2px solid var(--dark);
+  border-radius: 50% 50% 20% 20%;
+  animation: flicker 0.3s steps(2, end) infinite alternate;
+}
+
+.candle.blown::after { display: none; }
+
+@keyframes flicker {
+  0% { transform: scaleY(1) translateY(0); background: #ffae00; }
+  100% { transform: scaleY(0.8) translateY(2px); background: #ffeb9b; }
+}
+
+.green-candle { background: var(--secondary); }
+.primary-candle { background: var(--primary); }
+
+#actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+#actionButtons button { margin-top: 0; }
+
+/* === Heart-Shaped Gallery CSS (2,4,3,2,1) === */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(7, 45px); 
+  grid-template-rows: repeat(5, 45px);    
+  gap: 6px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+#gallery img {
+  width: 45px; height: 45px;
+  object-fit: cover;
+  border: 3px solid var(--dark);
+  box-shadow: 2px 2px 0px var(--dark);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+#gallery img:hover { transform: scale(1.1); }
+
+/* Custom Grid Placement for the checkerboard 12-image Heart */
+.h-1 { grid-area: 1 / 2; } .h-2 { grid-area: 1 / 6; }
+.h-3 { grid-area: 2 / 1; } .h-4 { grid-area: 2 / 3; } .h-5 { grid-area: 2 / 5; } .h-6 { grid-area: 2 / 7; }
+.h-7 { grid-area: 3 / 2; } .h-8 { grid-area: 3 / 4; } .h-9 { grid-area: 3 / 6; }
+.h-10 { grid-area: 4 / 3; } .h-11 { grid-area: 4 / 5; }
+.h-12 { grid-area: 5 / 4; }
+
+/* === Lightbox Slider === */
+#lightbox {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.85); z-index: 1000;
+  display: flex; justify-content: center; align-items: center; flex-direction: column;
+}
+
+#lightbox img {
+  max-width: 80%; max-height: 70%;
+  border: 5px solid var(--primary); box-shadow: 10px 10px 0px var(--dark);
+  object-fit: contain;
+  transition: 0.2s;
+}
+
+.lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  color: var(--dark);
+  border: 3px solid var(--dark);
+  font-size: 2rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px var(--dark);
+  z-index: 1001;
+}
+
+.lb-nav:hover { background: var(--primary); transform: translateY(-50%) translate(2px, 2px); box-shadow: 2px 2px 0px var(--dark); }
+.lb-nav.left { left: 5%; }
+.lb-nav.right { right: 5%; }
+
+.close-lb {
+  color: white; margin-top: 25px; font-size: 1.2rem; cursor: pointer;
+  background: var(--dark); padding: 5px 15px; border-radius: 20px; border: 2px solid white;
+}
+
+/* === Authentic Ticket Shape Voucher CSS === */
+.voucher-wrapper { 
+  margin-top: 25px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.pixel-ticket {
+  display: flex;
+  align-items: stretch;
+  background: var(--primary);
+  border: 4px solid var(--dark);
+  border-radius: 8px;
+  box-shadow: 8px 8px 0px var(--dark);
+  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden; 
+}
+
+/* The vertical "stub" on the left */
+.ticket-stub {
+  width: 50px;
+  padding: 15px 0;
+  border-right: 4px dashed var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--dark);
+  letter-spacing: 2px;
+  background: var(--secondary);
+}
+
+/* The main text area */
+.ticket-body {
+  padding: 25px 30px 25px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-body h3 { 
+  margin: 0; 
+  font-size: 1.3rem; 
+  color: var(--dark); 
+  text-transform: uppercase; 
+  letter-spacing: 1px; 
+}
+
+/* The top and bottom semi-circle "hole punches" that create the emoji ticket look */
+.pixel-ticket::before, .pixel-ticket::after {
+  content: ''; 
+  position: absolute; 
+  left: 50px; /* Aligned exactly on the dashed border */
+  width: 28px; 
+  height: 28px;
+  background: var(--bg-card); /* Matches the card background */
+  border: 4px solid var(--dark); 
+  border-radius: 50%; 
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.pixel-ticket::before { top: -18px; }
+.pixel-ticket::after { bottom: -18px; }
+
+.voucher-note { 
+  font-size: 0.95rem; 
+  color: #4a684d; 
+  font-style: italic; 
+  margin: 0; 
+  max-width: 80%; 
+}
+</style>
+</head>
+<body>
+
+<div id="lightbox" class="hidden">
+  <button class="lb-nav left" onclick="changeImage(-1, event)">&#10094;</button>
+  <img id="lb-img" src="" onclick="event.stopPropagation()">
+  <button class="lb-nav right" onclick="changeImage(1, event)">&#10095;</button>
+  <p class="close-lb" onclick="closeLightbox()">Close Gallery</p>
+</div>
+
+<canvas id="fx"></canvas>
+
+<audio id="music" loop autoplay>
+  <source src="you-by-lany.mp3" type="audio/mpeg">
+</audio>
+
+<div class="page active" id="page1">
+  <div class="card">
+    <h1>Happy Birthday!</h1>
+    <h2>Ivee Guen's 23rd Birthday</h2>
+    <p>Friday April 10, 2026</p>
+    <button onclick="nextPage(2); playAudio();">Ngiti ka muna bago mo to i-click😜</button>
+  </div>
+</div>
+
+<div class="page" id="page2">
+  <div class="card">
+    <h1>Bebeng,</h1>
+    <p style="font-size: 14px; text-align: justify;">
+      Happy Birthday! It feels like just yesterday we were celebrating your last milestone, yet here we are again, marking another year of your incredible journey. I hope today greets you with the same warmth and joy you consistently bring to everyone around you. You have a rare gift for making the people in your life feel seen and appreciated, and today is the perfect opportunity for us to return that favor and celebrate the wonderful person you are.<br><br>
+      The past year has been such a testament to your growth and resilience. Watching you navigate new challenges with such grace and a sense of humor has been truly inspiring. Whether you’re reaching professional goals or simply finding beauty in the quiet moments, you handle it all with a spirit that is uniquely yours. I am constantly impressed by your perspective on life, and I feel incredibly lucky to have a front-row seat to your evolution.<br><br>
+      As you step into this next chapter, my wish for you is simple: may it be filled with more of what makes your heart feel full. I hope this year brings you unexpected adventures, deep belly laughs, and the peace of mind to enjoy every second of it. You deserve all the happiness the world has to offer and then some. I can’t wait to see all the amazing things you’ll accomplish in the months ahead—cheers to you and a truly spectacular year!
+      <br><br><b>With all my love, Bunjing.</b>
+    </p>
+    <button onclick="nextPage(3)">Ehe, click mo to ganda</button>
+  </div>
+</div>
+
+<div class="page" id="page3">
+  <div class="card">
+    <h1 id="wishTitle">Make a Wish</h1>
+    <p id="subTitle">Make a wish and blow the candles!</p>
+    
+    <div class="svg-cake-wrapper">
+      <svg viewBox="0 0 200 180" width="100%" height="100%" style="display: block;">
+        <polygon points="20,108 100,156 100,168 20,120" fill="#b5e3b7" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="100,156 180,108 180,120 100,168" fill="#8fce92" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="100,60 180,108 100,156 20,108" fill="#e8f5e9" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+
+        <polygon points="40,56 100,92 100,140 40,104" fill="#795033" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="100,92 160,56 160,104 100,140" fill="#5c3a21" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+
+        <polygon points="40,56 100,92 100,100 85,91 85,103 70,94 70,82 55,73 55,83 40,74" fill="#fff7f0" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="100,92 160,56 160,65 145,74 145,67 130,76 130,95 115,85 115,100 100,110" fill="#ede0d5" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+
+        <polygon points="100,20 160,56 100,92 40,56" fill="#fff7f0" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round"/>
+
+        <rect x="80" y="45" width="8" height="4" rx="2" fill="#ff6fa5" transform="rotate(30 84 47)"/>
+        <rect x="120" y="65" width="8" height="4" rx="2" fill="#8fce92" transform="rotate(-30 124 67)"/>
+        <rect x="100" y="55" width="8" height="4" rx="2" fill="#ffae00" transform="rotate(45 104 57)"/>
+        <rect x="70" y="65" width="8" height="4" rx="2" fill="#ff6fa5" transform="rotate(-15 74 67)"/>
+        <rect x="130" y="45" width="8" height="4" rx="2" fill="#ffae00" transform="rotate(10 134 47)"/>
+        <rect x="90" y="35" width="8" height="4" rx="2" fill="#4ecdc4" transform="rotate(75 94 37)"/>
+        <rect x="110" y="80" width="8" height="4" rx="2" fill="#ff6fa5" transform="rotate(-60 114 82)"/>
+      </svg>
+      <div id="candles-container"></div>
+    </div>
+
+    <div id="actionButtons">
+      <button onclick="startMicDetection()">Blow (Mic)</button>
+      <button onclick="blowOutCandles()">Tap Instead</button>
+    </div>
+    
+    <p id="wish" class="hidden">✨ May your wishes do come true! ✨</p>
+    <button id="nextBtn3" class="hidden" onclick="nextPage(4)">Click mo to para matupad</button>
+  </div>
+</div>
+
+<div class="page" id="page4">
+  <div class="card">
+    <h1>Memories</h1>
+    
+    <div id="upload-ui">
+      <p>Upload <strong>exactly 12 photos</strong> to form a heart!</p>
+      <input type="file" multiple onchange="loadImages(event)" style="font-family: 'Pixelify Sans'; margin-bottom: 15px;">
+    </div>
+    
+    <div id="gallery"></div>
+    
+    <button onclick="nextPage(5)">Cheers to more moments together, Lalove!</button>
+  </div>
+</div>
+
+<div class="page" id="page5">
+  <div class="card">
+    <h1>Final Surprise</h1>
+    <button id="celebrateBtn" onclick="startCelebration()">Click to Celebrate</button>
+    
+    <div id="voucherContainer" class="voucher-wrapper hidden">
+      <div class="pixel-ticket">
+        <div class="ticket-stub">ADMIT 1</div>
+        <div class="ticket-body">
+          <h3>Celebratory Meal Voucher</h3>
+        </div>
+      </div>
+      <p class="voucher-note">* present this voucher to the sender anytime<br>(one-time use only)</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="nav">
+  <button onclick="nextPage(1)">1</button>
+  <button onclick="nextPage(2)">2</button>
+  <button onclick="nextPage(3)">3</button>
+  <button onclick="nextPage(4)">4</button>
+  <button onclick="nextPage(5)">5</button>
+</div>
+
+<script>
+// === Audio Playback ===
+function playAudio() {
+  const bgMusic = document.getElementById('music');
+  if(bgMusic.paused) {
+    bgMusic.play().catch(()=>{ console.log("User interaction required for audio"); });
+  }
+}
+window.addEventListener('click', playAudio, {once: true});
+
+// === Navigation ===
+function nextPage(n){
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active'); p.scrollTop = 0; 
+  });
+  document.getElementById('page'+n).classList.add('active');
+}
+
+// === Scroll-Safe Swipe Logic ===
+let sx=0, sy=0;
+document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; });
+document.addEventListener('touchend', e => {
+  let dx = e.changedTouches[0].clientX - sx;
+  let dy = e.changedTouches[0].clientY - sy;
+  // Make sure we only swipe if lightbox is hidden
+  if (Math.abs(dx) > Math.abs(dy) + 20 && document.getElementById('lightbox').classList.contains('hidden')) {
+    let cur = [...document.querySelectorAll('.page')].findIndex(p=>p.classList.contains('active')) + 1;
+    if(dx < -50 && cur < 5) nextPage(cur+1);
+    if(dx > 50 && cur > 1) nextPage(cur-1);
+  }
+});
+
+// === Widely Scattered Isometric Candles ===
+const candleContainer = document.getElementById("candles-container");
+const colors = ["green-candle", "primary-candle"];
+const candleCount = 23;
+
+function createCandles(count) {
+  candleContainer.innerHTML = "";
+  let positions = [];
+  
+  for(let i=0; i<count; i++) {
+    let u = Math.random();
+    let v = Math.random();
+    
+    let leftPercent = 50 + (u - v) * 32; 
+    let topPercent = 31 + (u + v - 1) * 18; 
+    
+    positions.push({ left: leftPercent, top: topPercent });
+  }
+  
+  positions.sort((a,b) => a.top - b.top);
+
+  positions.forEach((pos, idx) => {
+    const candle = document.createElement("div");
+    candle.classList.add("candle", colors[Math.floor(Math.random() * colors.length)]);
+    candle.style.left = `${pos.left}%`;
+    candle.style.top = `${pos.top}%`;
+    candle.style.zIndex = idx; 
+    candleContainer.appendChild(candle);
+  });
+}
+createCandles(candleCount);
+
+// === Microphone Blow Detection ===
+let micActive = false;
+
+async function startMicDetection() {
+  if (micActive) return;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 512;
+    source.connect(analyser);
+
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+    let blown = false;
+    micActive = true;
+
+    document.querySelector('#actionButtons button:first-child').innerText = "Listening... Blow!";
+
+    function detectBlow() {
+      analyser.getByteFrequencyData(dataArray);
+      let highFreqSum = 0, lowFreqSum = 0;
+      const midpoint = dataArray.length / 2;
+
+      for (let i = 0; i < dataArray.length; i++) {
+        if (i < midpoint) lowFreqSum += dataArray[i]; 
+        else highFreqSum += dataArray[i]; 
+      }
+      const ratio = (highFreqSum / (dataArray.length / 2)) / ((lowFreqSum / (dataArray.length / 2)) + 1);
+
+      if (ratio > 0.5 && !blown) {
+        blown = true; blowOutCandles();
+      }
+      if(!blown) requestAnimationFrame(detectBlow);
+    }
+    detectBlow();
+  } catch (err) {
+    alert("Microphone access denied. Please use 'Tap Instead'.");
+  }
+}
+
+function blowOutCandles() {
+  const candles = document.querySelectorAll(".candle");
+  candles.forEach((candle) => {
+    setTimeout(() => candle.classList.add("blown"), Math.floor(Math.random() * 5) * 200);
+  });
+
+  setTimeout(() => {
+    document.getElementById("subTitle").innerText = `Yayy! Wishing you the happiest birthday ever!! 🎉`;
+    document.getElementById("actionButtons").classList.add("hidden");
+    document.getElementById("wish").classList.remove("hidden");
+    document.getElementById("nextBtn3").classList.remove("hidden");
+    spawn('confetti');
+  }, 1200);
+}
+
+// === Image Gallery & Slider Logic ===
+let uploadedImages = [];
+let currentImgIndex = 0;
+
+function loadImages(e){
+  const g = document.getElementById('gallery');
+  g.innerHTML = '';
+  const files = Array.from(e.target.files).slice(0, 12); 
+  uploadedImages = [];
+  
+  files.forEach((f, index) => {
+    let imgURL = URL.createObjectURL(f);
+    uploadedImages.push(imgURL); // Store for slider
+    
+    let img = document.createElement('img');
+    img.src = imgURL;
+    img.className = 'h-' + (index + 1); 
+    
+    img.onclick = () => {
+      currentImgIndex = index;
+      document.getElementById('lb-img').src = uploadedImages[currentImgIndex];
+      document.getElementById('lightbox').classList.remove('hidden');
+    };
+    g.appendChild(img);
+  });
+
+  document.getElementById('upload-ui').classList.add('hidden');
+}
+
+// Slider Controls
+function changeImage(dir, event) {
+  event.stopPropagation(); // Prevents click from closing the lightbox
+  if(uploadedImages.length === 0) return;
+  
+  currentImgIndex += dir;
+  if (currentImgIndex < 0) currentImgIndex = uploadedImages.length - 1;
+  if (currentImgIndex >= uploadedImages.length) currentImgIndex = 0;
+  
+  document.getElementById('lb-img').src = uploadedImages[currentImgIndex];
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.add('hidden');
+}
+
+// === Canvas Particle Effects ===
+const canvas = document.getElementById('fx');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth; canvas.height = innerHeight;
+let particles = [];
+
+window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; });
+
+function spawn(type){
+  for(let i=0; i<150; i++){
+    particles.push({
+      x: canvas.width/2, y: canvas.height/2, 
+      a: Math.random() * 6.28, s: Math.random() * 5 + 2, 
+      l: 100, type
+    });
+  }
+}
+
+function startCelebration(){
+  spawn('fire'); spawn('confetti');
+  document.getElementById('celebrateBtn').classList.add('hidden'); 
+  document.getElementById('voucherContainer').classList.remove('hidden'); 
+}
+
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p => {
+    p.x += Math.cos(p.a) * p.s; p.y += Math.sin(p.a) * p.s; p.l--;
+    ctx.fillStyle = '#2b2b2b';
+    ctx.fillRect(p.x - 2, p.y - 2, 8, 8);
+    ctx.fillStyle = p.type === 'fire' ? `hsl(${Math.random()*360},100%,50%)` : ['#8fce92', '#b5e3b7', '#fff'][Math.floor(Math.random()*3)];
+    ctx.fillRect(p.x, p.y, 4, 4);
+  });
+  particles = particles.filter(p => p.l > 0);
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+
+</body>
+</html>
